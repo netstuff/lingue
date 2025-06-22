@@ -1,0 +1,8 @@
+name: lingue
+
+services:
+  py-litestar:
+    build:
+      context: ../../python
+    ports:
+      - ${PORT_PYTHON}:8000

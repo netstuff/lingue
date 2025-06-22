@@ -1,0 +1,8 @@
+name: lingue
+
+services:
+  go-gin:
+    build:
+      context: ../../golang
+    ports:
+      - ${PORT_GOLANG}:8080
