@@ -2,20 +2,32 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-var db = make(map[string]string)
+type UserData struct {
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	CreatedAt time.Time
+}
 
 func setupRouter() *gin.Engine {
-	// Disable Console Color
-	// gin.DisableConsoleColor()
 	r := gin.Default()
 
-	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong")
+	})
+
+	r.POST("/user", func(c *gin.Context) {
+		var user UserData
+		if err := c.BindJSON(&user); err != nil {
+			return
+		}
+
+		user.CreatedAt = time.Now()
+		c.IndentedJSON(http.StatusCreated, user)
 	})
 
 	return r
@@ -23,6 +35,5 @@ func setupRouter() *gin.Engine {
 
 func main() {
 	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
 	r.Run(":8080")
 }
