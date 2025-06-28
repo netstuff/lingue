@@ -24,6 +24,8 @@ services:
 
   locust-worker:
     image: locustio/locust
+    deploy:
+      replicas: 1
     volumes:
       - ../locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --worker --master-host locust-master
