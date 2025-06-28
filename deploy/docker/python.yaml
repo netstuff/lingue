@@ -1,8 +1,12 @@
 name: lingue
 
 services:
-  py-litestar:
+  litestar:
     build:
       context: ../../python
     ports:
       - ${PORT_PYTHON}:8000
+    environment:
+      - DB_HOST=postgres
+    depends_on:
+      - postgres

@@ -22,8 +22,9 @@ locust --headless -u 1000 -r 10 -t 50 --processes 4 <SERVICE>
  * `Gin`
 
 ### Locust (запуск из Docker)
-⚠️ WORK IN PROGRESS
 ```
 docker compose -f deploy/docker/locust.yaml up -d
 ```
-и открыть адрес http://localhost:8089
+Открыть адрес http://localhost:8089 и использовать для хоста:
+1. Golang Gin: `http://gin:8080`
+1. Python Litestar: `http://litestar:8000`

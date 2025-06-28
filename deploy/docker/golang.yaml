@@ -1,8 +1,12 @@
 name: lingue
 
 services:
-  go-gin:
+  gin:
     build:
       context: ../../golang
     ports:
       - ${PORT_GOLANG}:8080
+    environment:
+      - DB_HOST=postgres
+    depends_on:
+      - postgres

@@ -1,0 +1,32 @@
+name: lingue
+
+services:
+  postgres:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    command: -c shared_buffers=256MB -c max_connections=200
+    environment:
+      - POSTGRES_DB=lingue
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypass
+
+  locust-master:
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ../locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master
+    environment:
+      - HOST_PYTHON=litestar
+      - HOST_GOLANG=gin
+
+  locust-worker:
+    image: locustio/locust
+    volumes:
+      - ../locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host locust-master
+    environment:
+      - HOST_PYTHON=litestar
+      - HOST_GOLANG=gin
